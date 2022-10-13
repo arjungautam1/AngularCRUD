@@ -1,1 +1,28 @@
-<p>dialog works!</p>
+<h1 mat-dialog-title>Add Product Form</h1>
+<div mat-dialog-content>
+
+    <form [formGroup]="studentForm">
+        <mat-form-field appearance="outline">
+            <mat-label>Student Name</mat-label>
+            <input formControlName="name" matInput placeholder="Name">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Student Username</mat-label>
+            <input formControlName="username" matInput placeholder="UserName">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Student Email</mat-label>
+            <input formControlName="email" matInput type="email" placeholder="Email">
+        </mat-form-field>
+
+    </form>
+
+</div>
+
+<div mat-dialog-action [align]="'end'">
+    <button mat-raised-button color="warn" mat-dialog-close>Close</button>
+    <button style="margin-left: 8px;" mat-raised-button color="primary" 
+    mat-dialog-close (click)="addStudent()">Save</button>
+</div>
