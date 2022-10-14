@@ -14,7 +14,7 @@ import {MatTableDataSource} from '@angular/material/table';
 export class AppComponent implements OnInit {
   title = 'AngularCRUD';
 
-  displayedColumns: string[] = ['id', 'name', 'username', 'email'];
+  displayedColumns: string[] = ['id', 'name', 'username', 'email','action'];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -32,11 +32,15 @@ export class AppComponent implements OnInit {
      
       width:'30%'
 
-    });
+    }).afterClosed().subscribe(val=>{
+      if(val==='save'){
+        this.getAllStudents()
+      }
+    })
   }
 
   getAllStudents(){
-    this.api.getStudent()
+    this.api.getStudents()
     .subscribe({
       next:(res)=>{
         this.dataSource=new MatTableDataSource(res);
@@ -45,6 +49,27 @@ export class AppComponent implements OnInit {
       },
       error:(err)=>{
         alert("Error while fetching the Records.")
+      }
+    })
+  }
+
+  editStudent(row:any){
+    this.dialog.open(DialogComponent,{
+      width:'30%',
+      data:row
+    }).afterClosed().subscribe(val=>{
+      if(val==='update'){
+        this.getAllStudents()
+      }
+    })
+  }
+
+  deleteStudents(id:number){
+    this.api.deleteStudent(id)
+    .subscribe({
+      next:(res)=>{
+        alert("Deleted")
+        this.getAllStudents()
       }
     })
   }
